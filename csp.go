@@ -228,7 +228,7 @@ func S41_DIV(x, y int, res chan struct{ quot, rem int }) {
 	rem := x
 	for rem >= y {
 		rem -= y
-		quot += 1
+		quot++
 	}
 	res <- struct{ quot, rem int }{quot, rem}
 }
@@ -327,7 +327,7 @@ func (s *S43_IntSet) Has(n int, res chan<- bool) {
 	go func() {
 		s.writeLock.RLock()
 		i := s.search(n)
-		res <- (i < len(s.content))
+		res <- i < len(s.content)
 		s.writeLock.RUnlock()
 	}()
 }
@@ -829,7 +829,7 @@ func (m S62_Matrix) NORTH(col int) {
 // A sink on the right.
 func (m S62_Matrix) EAST(row int) {
 	rightmost := len(m.eastward[row]) - 1
-	for _ = range m.eastward[row][rightmost] {
+	for range m.eastward[row][rightmost] {
 		// do nothing, just consume
 	}
 }
@@ -839,7 +839,7 @@ func (m S62_Matrix) CENTER(row, col int) {
 	for x := range m.eastward[row][col-1] {
 		m.eastward[row][col] <- x
 		sum := <-m.southward[row-1][col]
-		m.southward[row][col] <- (m.A[row-1][col-1]*x + sum)
+		m.southward[row][col] <- m.A[row-1][col-1]*x + sum
 	}
 }
 

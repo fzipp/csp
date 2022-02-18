@@ -483,7 +483,7 @@ func printMatrix(m [][]float64) string {
 		for j := 0; j < len(m[0]); j++ {
 			fmt.Fprintf(&b, "%v ", m[i][j])
 		}
-		fmt.Fprintf(&b, "\n")
+		b.WriteRune('\n')
 	}
 
 	return b.String()
