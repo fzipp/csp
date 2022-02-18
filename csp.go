@@ -266,7 +266,7 @@ func S41_DIV(x, y int, res chan struct{ quot, rem int }) {
 // When we create it, we launch the corresponding goroutines at the same
 // time.
 func S42_facM(limit int) chan int {
-	fac := make([]chan int, limit+1, limit+1)
+	fac := make([]chan int, limit+1)
 
 	fac[0] = make(chan int)
 
