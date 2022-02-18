@@ -464,11 +464,9 @@ func TestMatrixMultiply(t *testing.T) {
 		}
 
 		for i := 0; i < 3; i++ {
-			go func(i int) {
-				for j := 0; j < 3; j++ {
-					matrix.WEST[j] <- testcase.other[i][j]
-				}
-			}(i)
+			for j := 0; j < 3; j++ {
+				matrix.WEST[j] <- testcase.other[i][j]
+			}
 		}
 
 		wg.Wait()
