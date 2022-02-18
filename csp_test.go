@@ -168,6 +168,7 @@ func TestIntSet(t *testing.T) {
 
 	set := S43_NewIntSet()
 	hasChan := make(chan bool)
+	ack := make(chan int)
 
 	set.Has(0, hasChan)
 	expect(!(<-hasChan), "empty !has(0)")
@@ -176,7 +177,8 @@ func TestIntSet(t *testing.T) {
 	set.Has(100, hasChan)
 	expect(!(<-hasChan), "empty !has(100)")
 
-	set.Insert(34523, nil)
+	set.Insert(34523, ack)
+	<-ack
 	set.Has(0, hasChan)
 	expect(!(<-hasChan), "{34523} !has(0)")
 	set.Has(34523, hasChan)
@@ -186,7 +188,6 @@ func TestIntSet(t *testing.T) {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	n := 10
 
-	ack := make(chan int)
 	for i := 0; i < n; i++ {
 		go set.Insert(i, ack)
 	}
