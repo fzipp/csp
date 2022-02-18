@@ -12,9 +12,6 @@
 // other port in another process", in which case it would be a mostly
 // syntactic difference.
 //
-// [1]
-// http://blog.golang.org/2010/07/share-memory-by-communicating.html
-//
 // Implementing these examples, and the careful reading of the paper
 // required to do so, were a very enlightening experience. I found the
 // iterative array of 4.2, the concurrent routines changing their
@@ -36,6 +33,8 @@
 // you can observe the philosophers behavior (use `go test -v`).
 //
 // Thomas Kappler <tkappler@gmail.com>
+//
+// [1]: https://go.dev/blog/codelab-share
 package csp
 
 import (
