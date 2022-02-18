@@ -3,7 +3,6 @@ package csp
 import (
 	"bytes"
 	"fmt"
-	"runtime"
 	"sort"
 	"strconv"
 	"strings"
@@ -184,8 +183,6 @@ func TestIntSet(t *testing.T) {
 	set.Has(34523, hasChan)
 	expect(<-hasChan, "{34523} has(34523)")
 
-	// Parallel use, Insert() must lock.
-	runtime.GOMAXPROCS(runtime.NumCPU())
 	n := 10
 
 	for i := 0; i < n; i++ {
@@ -233,8 +230,6 @@ func TestIntSetScan(t *testing.T) {
 }
 
 func TestParIntSet(t *testing.T) {
-	runtime.GOMAXPROCS(runtime.NumCPU())
-
 	insert, has, scan, least := S45_ParIntSet(10)
 
 	// The empty set does not contain any number,
@@ -301,8 +296,6 @@ func TestParIntSet(t *testing.T) {
 
 // 5.1
 func TestBuffer(t *testing.T) {
-	runtime.GOMAXPROCS(runtime.NumCPU())
-
 	consumer, producer := S51_Buffer(10)
 
 	for i := 0; i < 10; i++ {
@@ -355,13 +348,10 @@ func TestSemaphore(t *testing.T) {
 // That's not actually a test, we just let the scenario run for 10
 // seconds so we can observe the log.
 func TestDiningPhilosophers(t *testing.T) {
-	runtime.GOMAXPROCS(runtime.NumCPU())
 	S53_DiningPhilosophers(10 * time.Second)
 }
 
 func TestPrimeSieve(t *testing.T) {
-	runtime.GOMAXPROCS(runtime.NumCPU())
-
 	numPrimes := 100
 
 	// Copied from http://primes.utm.edu/lists/small/10000.txt
@@ -402,8 +392,6 @@ func TestPrimeSieve(t *testing.T) {
 }
 
 func TestMatrixMultiply(t *testing.T) {
-	runtime.GOMAXPROCS(runtime.NumCPU())
-
 	A := [][]float64{
 		[]float64{1, 2, 3},
 		[]float64{4, 5, 6},
