@@ -149,7 +149,7 @@ func TestConway(t *testing.T) {
 
 func TestFac(t *testing.T) {
 	f := S42_facM(8)
-	for _, pair := range [][]int{[]int{0, 1}, []int{1, 1}, []int{4, 24}, []int{8, 40320}} {
+	for _, pair := range [][]int{{0, 1}, {1, 1}, {4, 24}, {8, 40320}} {
 		f <- pair[0]
 		res := <-f
 		if res != pair[1] {
@@ -393,47 +393,47 @@ func TestPrimeSieve(t *testing.T) {
 
 func TestMatrixMultiply(t *testing.T) {
 	A := [][]float64{
-		[]float64{1, 2, 3},
-		[]float64{4, 5, 6},
-		[]float64{7, 8, 9},
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 9},
 	}
 	matrix := S62_NewMatrix(A)
 
 	for _, testcase := range []struct{ other, expected [][]float64 }{
 		{
 			other: [][]float64{
-				[]float64{1, 1, 1},
-				[]float64{1, 1, 1},
-				[]float64{1, 1, 1},
+				{1, 1, 1},
+				{1, 1, 1},
+				{1, 1, 1},
 			},
 			expected: [][]float64{
-				[]float64{12, 15, 18},
-				[]float64{12, 15, 18},
-				[]float64{12, 15, 18},
+				{12, 15, 18},
+				{12, 15, 18},
+				{12, 15, 18},
 			},
 		},
 		{
 			other: [][]float64{
-				[]float64{1, 1, 1},
-				[]float64{2, 2, 2},
-				[]float64{3, 3, 3},
+				{1, 1, 1},
+				{2, 2, 2},
+				{3, 3, 3},
 			},
 			expected: [][]float64{
-				[]float64{12, 15, 18},
-				[]float64{24, 30, 36},
-				[]float64{36, 45, 54},
+				{12, 15, 18},
+				{24, 30, 36},
+				{36, 45, 54},
 			},
 		},
 		{
 			other: [][]float64{
-				[]float64{1, 2, 3},
-				[]float64{1, 2, 3},
-				[]float64{1, 2, 3},
+				{1, 2, 3},
+				{1, 2, 3},
+				{1, 2, 3},
 			},
 			expected: [][]float64{
-				[]float64{30, 36, 42},
-				[]float64{30, 36, 42},
-				[]float64{30, 36, 42},
+				{30, 36, 42},
+				{30, 36, 42},
+				{30, 36, 42},
 			},
 		},
 	} {
