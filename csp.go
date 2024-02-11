@@ -164,7 +164,7 @@ func S34_ASSEMBLE(X chan rune, lineprinter chan []rune) {
 
 	// Print the last line padded with spaces.
 	if i > 0 {
-		for j := range linelen {
+		for j := i; j < linelen; j++ {
 			lineimage[j] = ' '
 		}
 		lineprinter <- lineimage
