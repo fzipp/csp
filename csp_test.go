@@ -185,15 +185,15 @@ func TestIntSet(t *testing.T) {
 
 	n := 10
 
-	for i := 0; i < n; i++ {
+	for i := range n {
 		go set.Insert(i, ack)
 	}
 	// Wait until all are inserted.
-	for i := 0; i < n; i++ {
+	for range n {
 		<-ack
 	}
 
-	for i := 0; i < n; i++ {
+	for i := range n {
 		set.Has(i, hasChan)
 		expect(<-hasChan, "parallel insertions")
 	}
@@ -212,7 +212,7 @@ func TestIntSetScan(t *testing.T) {
 	for _, n := range expected {
 		set.Insert(n, ack)
 	}
-	for i := 0; i < n; i++ {
+	for range n {
 		<-ack
 	}
 
@@ -298,7 +298,7 @@ func TestParIntSet(t *testing.T) {
 func TestBuffer(t *testing.T) {
 	consumer, producer := S51_Buffer(10)
 
-	for i := 0; i < 10; i++ {
+	for i := range 10 {
 		select {
 		case producer <- i:
 			// empty
@@ -311,7 +311,7 @@ func TestBuffer(t *testing.T) {
 	// ten portions.
 
 	received := make([]int, 10)
-	for i := 0; i < 10; i++ {
+	for i := range 10 {
 		select {
 		case received[i] = <-consumer:
 			if received[i] != i {
@@ -384,7 +384,7 @@ func TestPrimeSieve(t *testing.T) {
 	// primes can arrive out of order.
 	sort.Ints(primes)
 
-	for i := 0; i < l; i++ {
+	for i := range l {
 		if strconv.Itoa(primes[i]) != first100Primes[i] {
 			t.Errorf("Expected %v as %vnth prime, got %v.", first100Primes[i], i, primes[i])
 		}
@@ -439,11 +439,11 @@ func TestMatrixMultiply(t *testing.T) {
 	} {
 		result := make([][]float64, 3)
 		var wg sync.WaitGroup
-		for i := 0; i < 3; i++ {
+		for i := range 3 {
 			result[i] = make([]float64, 3)
 			wg.Add(1)
 			go func(i int) {
-				for j := 0; j < 3; j++ {
+				for j := range 3 {
 					val := <-matrix.SOUTH[i]
 					result[j][i] = val
 				}
@@ -451,8 +451,8 @@ func TestMatrixMultiply(t *testing.T) {
 			}(i)
 		}
 
-		for i := 0; i < 3; i++ {
-			for j := 0; j < 3; j++ {
+		for i := range 3 {
+			for j := range 3 {
 				matrix.WEST[j] <- testcase.other[i][j]
 			}
 		}
@@ -467,8 +467,8 @@ func TestMatrixMultiply(t *testing.T) {
 }
 
 func matricesEqual(a, b [][]float64) bool {
-	for i := 0; i < 3; i++ {
-		for j := 0; j < 3; j++ {
+	for i := range 3 {
+		for j := range 3 {
 			if a[i][j] != b[i][j] {
 				return false
 			}
@@ -479,8 +479,8 @@ func matricesEqual(a, b [][]float64) bool {
 
 func printMatrix(m [][]float64) string {
 	var b bytes.Buffer
-	for i := 0; i < len(m); i++ {
-		for j := 0; j < len(m[0]); j++ {
+	for i := range len(m) {
+		for j := range len(m[0]) {
 			fmt.Fprintf(&b, "%v ", m[i][j])
 		}
 		b.WriteRune('\n')

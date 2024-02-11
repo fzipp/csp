@@ -164,7 +164,7 @@ func S34_ASSEMBLE(X chan rune, lineprinter chan []rune) {
 
 	// Print the last line padded with spaces.
 	if i > 0 {
-		for j := i; j < linelen; j++ {
+		for j := range linelen {
 			lineimage[j] = ' '
 		}
 		lineprinter <- lineimage
@@ -683,7 +683,7 @@ func S53_DiningPhilosophers(runFor time.Duration) {
 	// distinguish them so that we can match pickup and putdown of a fork.
 	pickup := make([]chan int, 5)
 	putdown := make([]chan int, 5)
-	for i := 0; i < 5; i++ {
+	for i := range 5 {
 		pickup[i] = make(chan int)
 		putdown[i] = make(chan int)
 	}
@@ -725,10 +725,10 @@ func S53_DiningPhilosophers(runFor time.Duration) {
 
 	// Launch the scenario.
 	go room()
-	for i := 0; i < 5; i++ {
+	for i := range 5 {
 		go fork(i)
 	}
-	for i := 0; i < 5; i++ {
+	for i := range 5 {
 		go philosopher(i)
 	}
 
@@ -766,7 +766,7 @@ func S61_SIEVE(numPrimes int, primes chan int) {
 	sieve[numPrimes-1] = make(chan int)
 	done := make(chan bool)
 
-	for i := 0; i < numPrimes-1; i++ {
+	for i := range numPrimes - 1 {
 		sieve[i] = make(chan int)
 
 		go func(i int) {
@@ -861,17 +861,17 @@ func S62_NewMatrix(values [][]float64) S62_Matrix {
 	m := S62_Matrix{A: values}
 
 	m.eastward = make([][]chan float64, numRows+1)
-	for i := 0; i < numRows+1; i++ {
+	for i := range numRows + 1 {
 		m.eastward[i] = make([]chan float64, numCols+1)
-		for j := 0; j < numCols+1; j++ {
+		for j := range numCols + 1 {
 			m.eastward[i][j] = make(chan float64)
 		}
 	}
 
 	m.southward = make([][]chan float64, numRows+1)
-	for i := 0; i < numRows+1; i++ {
+	for i := range numRows + 1 {
 		m.southward[i] = make([]chan float64, numCols+1)
-		for j := 0; j < numCols+1; j++ {
+		for j := range numCols + 1 {
 			m.southward[i][j] = make(chan float64)
 		}
 	}
